@@ -20,10 +20,10 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
-    //dashboard admin lte
-    // Route::get('/home', function() {
-    //     return view('home');})->name('home');
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // dashboard admin lte
+    Route::get('/home', function() {
+        return view('home');})->name('home');
+        // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
 
