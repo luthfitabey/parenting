@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,11 +19,37 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::middleware(['auth'])->group(function () {
-    // dashboard admin lte
-    Route::get('/home', function() {
-        return view('home');})->name('home');
-        // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::middleware(['auth'])->group(function () {
+//     // dashboard admin lte
+//     Route::get('/home', function() {
+//         return view('home');})->name('home');
+//         // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// });
+
+Route::middleware(['auth', 'user-access:user'])->group(function () {
+  
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
+  
+/*------------------------------------------
+--------------------------------------------
+All Admin Routes List
+--------------------------------------------
+--------------------------------------------*/
+Route::middleware(['auth', 'user-access:admin'])->group(function () {
+  
+    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
+});
+  
+/*------------------------------------------
+--------------------------------------------
+All Admin Routes List
+--------------------------------------------
+--------------------------------------------*/
+Route::middleware(['auth', 'user-access:manager'])->group(function () {
+  
+    Route::get('/manager/home', [HomeController::class, 'managerHome'])->name('manager.home');
+});
+ 
 
 
