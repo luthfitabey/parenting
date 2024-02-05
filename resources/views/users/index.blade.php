@@ -22,6 +22,7 @@
                             <th>No.</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>Tipe</th>
                             <th>Opsi</th>
                         </tr>
                         </thead>
@@ -31,6 +32,7 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
+                                <td>{{$user->type}}</td>
                                 <td>
                                     <a href="{{route('users.edit', $user)}}" class="btn btn-primary btn-xs">
                                         Edit

@@ -27,6 +27,11 @@
                         @error('email') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputType">Tipe</label>
+                        <input type="text" class="form-control @error('type') is-invalid @enderror" id="exampleInputType" placeholder="Tipe" name="type" value="{{$user->type ?? old('type')}}">
+                        @error('type') <span class="text-danger">{{$message}}</span> @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputPassword">Password</label>
                         <input type="password" class="form-control @error('password') is-invalid @enderror" id="exampleInputPassword" placeholder="Password" name="password">
                         @error('password') <span class="text-danger">{{$message}}</span> @enderror
