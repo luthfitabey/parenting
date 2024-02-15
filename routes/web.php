@@ -40,6 +40,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
   
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
     Route::resource('users', \App\Http\Controllers\UserController::class);
+    Route::resource('kecamatans', \App\Http\Controllers\KecamatanController::class);
+    Route::resource('kelurahans', \App\Http\Controllers\KelurahanController::class);
 });
   
 /*------------------------------------------
