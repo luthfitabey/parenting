@@ -44,10 +44,38 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Ensure 'type' is stored as a string and retrieved correctly.
+     */
     protected function type(): Attribute
     {
         return new Attribute(
-            get: fn ($value) =>  ["user", "admin", "manager"][$value],
+            get: fn ($value) => $value, // Return as stored (string)
+            set: fn ($value) => strtolower($value) // Ensure it's stored in lowercase
         );
+    }
+
+    /**
+     * Check if user is an admin.
+     */
+    public function isAdmin()
+    {
+        return $this->type === 'admin';
+    }
+
+    /**
+     * Check if user is a manager.
+     */
+    public function isManager()
+    {
+        return $this->type === 'manager';
+    }
+
+    /**
+     * Check if user is a regular user.
+     */
+    public function isUser()
+    {
+        return $this->type === 'user';
     }
 }

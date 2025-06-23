@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stuntings', function (Blueprint $table) {
-            $table->id();
+        Schema::create('nomenklaturs', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('subKeg');
+            $table->string('kegiatan');
+            $table->string('program');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stuntings');
+        //
     }
 };

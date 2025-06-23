@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'PARENTING',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>PARENTING</b>',
+    'logo_img' => 'assets/img/stunting-logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -109,7 +109,7 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'assets/img/stunting-logo.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -257,7 +257,7 @@ return [
     'dashboard_url' => '/home',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
+    'register_url' => null,
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
     'profile_url' => false,
@@ -313,17 +313,11 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
+            'text'        => 'Dashboard',
+            'url'         => '/admin/home',
+            'icon'        => 'fas fa-home',
             'label'       => 4,
             'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'User',
-            'url'  => '/users',
-            'icon' => 'fas fa-fw fa-user',
         ],
         // [
         //     'text' => 'change_password',
@@ -331,57 +325,80 @@ return [
         //     'icon' => 'fas fa-fw fa-lock',
         // ],
         [
-            'text'    => 'multilevel',
+            'text'    => 'Pengaturan',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'User',
+                    'url'  => '/users',
+                    'icon' => 'fas fa-fw fa-user',
                 ],
                 [
-                    'text'    => 'level_one',
+                    'text' => 'Perangkat daerah',
+                    'url'  => '#',
+                    'icon' => '	fas fa-users',
+                    'icon_color' => 'white',
+                ],
+                [
+                    'text'    => 'Wilayah',
                     'url'     => '#',
+                    'icon'    => 'fas fa-map-marker-alt',
                     'submenu' => [
                         [
-                            'text' => 'level_two',
-                            'url'  => '#',
+                            'text' => 'Kecamatan',
+                            'route'  => 'kecamatans.index',
+                            'icon' => 'fas fa-file',
                         ],
                         [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
+                            'text'    => 'Kelurahan',
+                            'route'     => 'kelurahans.index',
+                            'icon' => 'far fa-file',
                         ],
                     ],
                 ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
+                // [
+                //     'text' => 'level_one',
+                //     'url'  => '#',
+                // ],
             ],
         ],
-        ['header' => 'labels'],
+        ['header' => 'STUNTING'],
         [
-            'text'       => 'important',
-            'icon_color' => 'red',
+            'text'       => 'Data Stunting',
+            'icon_color' => 'white',
+            'icon' => 'fas fa-child',
+            'url'        => '#',
+            'submenu' => [
+                [
+                    'text' => 'Data Balita',
+                    'route' => 'balitas.index',
+                    'icon'  => 'fas fa-baby',
+                ],
+                [
+                    'text' => 'Balita Stunting',
+                    'route' => 'stuntings.index',
+                    'icon'  => 'fas fa-ruler-vertical',
+                ],
+                [
+                    'text' => 'Prevalensi Stunting',
+                    'route'  => 'prevalensis.index',
+                    'icon' => 'fas fa-chart-bar',
+                    'icon_color' => 'white',
+                ],
+
+            ],
+        ],
+        [
+            'text'       => 'Intervensi Stunting',
+            'icon_color' => 'white',
+            'icon'  => 'fas fa-hand-holding-medical',
             'url'        => '#',
         ],
         [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
+            'text'       => 'Audit Kasus',
             'icon_color' => 'cyan',
+            'icon' => '	fas fa-edit',
+            'icon_color' => 'white',
             'url'        => '#',
         ],
     ],

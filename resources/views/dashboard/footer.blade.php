@@ -40,11 +40,11 @@
     <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
       <h4>Hubungi Kami</h4>
       <p>
-        Bappeda Litbang Kota Mojokerto <br>
+        Bapperida Kota Mojokerto <br>
         Jalan Jawa No. 31, Kecamatan Kranggan <br>
         Kota Mojokerto 61321 <br><br>
         <strong>Telepon:</strong> (0321) 327926<br>
-        <strong>Email:</strong> bappedalitbang@mojokertokota.go.id<br>
+        <strong>Email:</strong> bapperida@mojokertokota.go.id<br>
       </p>
 
     </div>

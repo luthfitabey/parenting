@@ -2,57 +2,70 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DataController;
+use App\Http\Controllers\KelurahanController;
+use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\BalitaController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PrevStuntingController;
+use App\Http\Controllers\StuntingController;
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 Route::get('/', function () {
-    // return view('welcome');
     return view('dashboard.index');
 });
 
 Auth::routes();
-// Route::middleware(['auth'])->group(function () {
-//     // dashboard admin lte
-//     Route::get('/home', function() {
-//         return view('home');})->name('home');
-//         // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// });
 
+// Route untuk Registrasi
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+
+// Route untuk Home berdasarkan Role
+Route::get('/home', function () {
+    if (auth()->check()) {
+        return match (auth()->user()->role) {
+            'admin' => redirect()->route('admin'),
+            'manager' => redirect()->route('manager'),
+            default => redirect()->route('user'),
+        };
+    }
+    return redirect('/login'); // Redirect ke login jika belum login
+})->name('home');
+
+// Route untuk User (Authenticated Users Only)
 Route::middleware(['auth', 'user-access:user'])->group(function () {
-  
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/user/home', [DashboardController::class, 'dashboard'])->name('user');
 });
-  
-/*------------------------------------------
---------------------------------------------
-All Admin Routes List
---------------------------------------------
---------------------------------------------*/
-Route::middleware(['auth', 'user-access:admin'])->group(function () {
-  
-    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
-    Route::resource('users', \App\Http\Controllers\UserController::class);
-    Route::resource('kecamatans', \App\Http\Controllers\KecamatanController::class);
-    Route::resource('kelurahans', \App\Http\Controllers\KelurahanController::class);
-});
-  
-/*------------------------------------------
---------------------------------------------
-All Admin Routes List
---------------------------------------------
---------------------------------------------*/
-Route::middleware(['auth', 'user-access:manager'])->group(function () {
-  
-    Route::get('/manager/home', [HomeController::class, 'managerHome'])->name('manager.home');
-});
- 
 
+// Route untuk Admin
+Route::middleware(['auth', 'user-access:admin'])->prefix('admin')->group(function () {
+    Route::get('/home', [DashboardController::class, 'dashboard'])->name('admin');
 
+    Route::resources([
+        'users' => UserController::class,
+        'kecamatans' => KecamatanController::class,
+        'kelurahans' => KelurahanController::class,
+        'balitas' => BalitaController::class,
+        'stuntings' => StuntingController::class,
+        'prevalensis' => PrevStuntingController::class,
+    ]);
+
+    Route::get('/kelurahans/data', [DataController::class, 'kelurahans'])->name('data-kelurahan');
+    Route::get('/kecamatans/data', [DataController::class, 'kecamatans'])->name('data-kecamatan');
+});
+
+// Route untuk Manager
+Route::middleware(['auth', 'user-access:manager'])->prefix('manager')->group(function () {
+    Route::get('/home', [DashboardController::class, 'dashboard'])->name('manager');
+});
+
+// Route untuk Peta Stunting
+Route::get('/peta-stunting', [DashboardController::class, 'petaStunting'])->name('peta.stunting');

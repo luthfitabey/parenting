@@ -2,83 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Stunting;
+use App\Models\Balita;
 use Illuminate\Http\Request;
 
 class StuntingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $stuntings = Stunting::with('balita')->get();
+        return view('stuntings.index', compact('stuntings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $balitas = Balita::all();
+        $months = [
+            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        ];
+        return view('stuntings.create', compact('balitas', 'months'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'balita_id' => 'required|exists:balitas,id',
+            'isStunting' => 'required|boolean',
+            'bulan_timbang' => 'required|string',
+        ]);
+        
+        Stunting::create($request->all());
+        return redirect()->route('stuntings.index')->with('success', 'Data berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit(Stunting $stunting)
     {
-        //
+        $balitas = Balita::all();
+        $months = [
+            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        ];
+        return view('stuntings.edit', compact('stunting', 'balitas', 'months'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(Request $request, Stunting $stunting)
     {
-        //
+        $request->validate([
+            'balita_id' => 'required|exists:balitas,id',
+            'isStunting' => 'required|boolean',
+            'bulan_timbang' => 'required|string',
+        ]);
+        
+        $stunting->update($request->all());
+        return redirect()->route('stuntings.index')->with('success', 'Data berhasil diperbarui');
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function destroy(Stunting $stunting)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $stunting->delete();
+        return redirect()->route('stuntings.index')->with('success', 'Data berhasil dihapus');
     }
 }

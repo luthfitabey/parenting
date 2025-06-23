@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+use App\Models\Kelurahan;
+use App\Models\Kecamatan;
 
 class KecamatanController extends Controller
 {
@@ -11,9 +15,17 @@ class KecamatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $kecamatans = Kecamatan::all();
+        return view('kecamatan.index', [
+            'kecamatans' => $kecamatans
+        ]);
     }
 
     /**
@@ -23,7 +35,10 @@ class KecamatanController extends Controller
      */
     public function create()
     {
-        //
+        $kecamatans = Kecamatan::get()->first();
+        return view('kecamatan.create', [
+            'kecamatan' => $kecamatans,
+        ]);
     }
 
     /**
@@ -34,7 +49,23 @@ class KecamatanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $kecamatans = new Kecamatan();
+        $this->validate($request, [
+            'kode' => 'required',
+            'nama' => 'required',
+        ]);
+
+        $kecamatan = Kecamatan::create($request->all());
+        // Kecamatan::create($request->all());
+        // proses simpan data
+        $kecamatan->save();
+
+        // redirect ke halaman index kecamatan
+        if ($kecamatan) {
+            return redirect()->route('kecamatans.index')->with('success', 'Data berhasil disimpan');
+        } else {
+            return redirect()->route('kecamatans.index')->with('error', 'Data gagal disimpan');
+        }
     }
 
     /**
@@ -54,9 +85,12 @@ class KecamatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Kecamatan $kecamatan)
     {
-        //
+        $kecamatan = Kecamatan::findOrFail($kecamatan->id);
+        return view('kecamatan.edit', [
+            'kecamatan' => $kecamatan
+        ]);
     }
 
     /**
@@ -66,9 +100,16 @@ class KecamatanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Kecamatan $kecamatan)
     {
-        //
+        $this->validate($request, [
+            'kode' => 'required',
+            'nama' => 'required',
+        ]);
+        $kecamatan->update($request->all());
+        
+        return redirect()->route('kecamatans.index')
+        ->with('success', 'Data berhasil diupdate');
     }
 
     /**
@@ -79,6 +120,8 @@ class KecamatanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kecamatan = Kecamatan::findOrFail($id);
+        $kecamatan->delete();
+        return redirect()->route('kecamatans.index');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Kelurahan;
 
 class Kecamatan extends Model
 {
@@ -16,8 +17,8 @@ class Kecamatan extends Model
         'updated_at' => 'datetime:d-m-y',
     ];
 
-    public function kecamatan()
+    public function kelurahans()
     {
-        return $this->belongsTo('App\Models\Kelurahan', 'kelurahan_id');
+        return $this->hasMany(Kelurahan::class);
     }
 }

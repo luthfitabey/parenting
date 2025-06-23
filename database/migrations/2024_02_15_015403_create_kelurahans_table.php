@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
-     *
-     * @return void
+     * Jalankan migrasi.
      */
     public function up()
     {
@@ -17,16 +15,21 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('kode')->unique();
             $table->string('nama', 40);
-            $table->integer('kecamatan_id')->unsigned();
-            $table->foreign('kecamatan_id')->references('id')->on('kecamatans');
+            $table->unsignedInteger('kecamatan_id'); // Pastikan unsigned
+
+            // Foreign Key Constraint dengan ON DELETE dan ON UPDATE Cascade
+            $table->foreign('kecamatan_id')
+                ->references('id')
+                ->on('kecamatans')
+                ->onUpdate('cascade') // Jika id di kecamatans berubah, ikut diperbarui
+                ->onDelete('cascade'); // Jika kecamatans dihapus, kelurahans terkait ikut terhapus
+            
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
-     *
-     * @return void
+     * Rollback migrasi.
      */
     public function down()
     {

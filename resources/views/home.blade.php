@@ -12,6 +12,7 @@
             <div class="card">
                 <div class="card-body">
                     <p class="mb-0">You are logged in as user!</p>
+                    <a href="{{ route('peta.stunting') }}" class="btn btn-primary mt-3">Lihat Peta Stunting</a>
                 </div>
             </div>
         </div>
