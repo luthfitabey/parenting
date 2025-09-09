@@ -10,8 +10,8 @@
             <a href="https://youtu.be/CZtZzp0b6kY?si=wtmHQsns0dUBh7A0" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Tonton Video</span></a>
           </div>
         </div>
-        <div class="col-lg-6 order-1 order-lg-2">
-          <img src="assets/img/PJStunting.png" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100">
+        <div class="col-lg-4 order-1 order-lg-2">
+          <img src="assets/img/walikotastunting.jpeg" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100">
         </div>
       </div>
     </div>
